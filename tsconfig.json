@@ -1,0 +1,5 @@
+{
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es2018" // or newer if your node.js version supports this
+  }
