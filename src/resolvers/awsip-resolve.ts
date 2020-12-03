@@ -1,12 +1,16 @@
-import "reflect-metadata"; // is required to make the type reflection work
-import { AwsIpService } from "src/Service/awsIpService";
+import { AwsIpService } from "src/Service/AwsIpService";
 import { Resolver, Query, Arg } from "type-graphql";
 import {AwsIp} from "../entity/AwsIp";
+import { Service } from "typedi";
 
-@Resolver(AwsIp)
+@Service()
+@Resolver(of => AwsIp)
 export class AwsIpResolver {
 
-    constructor(private awsIpService: AwsIpService) {}
+    constructor(
+        // constructor injection of the service
+        private readonly awsIpService: AwsIpService
+    ) {}
 
     @Query(returns => [AwsIp])
     async ips(@Arg("region") region: string): Promise<AwsIp[]> {
