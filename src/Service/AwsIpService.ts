@@ -2,13 +2,12 @@ import { AwsIp } from "../entity/AwsIp";
 import {
     FirestoreService
 } from "./FirestoreService";
-import { Service, Inject } from "typedi";
+import { Service } from "typedi";
 
 @Service()
 export class AwsIpService {
 
-    @Inject("AWS_IPS_SERVICE")
-    private ips: Array<AwsIp>;
+    private ips: Array<AwsIp> = [];
 
     constructor(private readonly fireStoreDb: FirestoreService) {
     }
@@ -17,7 +16,7 @@ export class AwsIpService {
 
         const snapshot = await this.fireStoreDb
             .getAwsIpsCollection()
-            .where('region', '==', region).get();
+            .where('region', '>=', region).get();
 
         if (snapshot.empty) {
             console.log(`No matching documents for region: {region}.`);
@@ -27,6 +26,10 @@ export class AwsIpService {
         snapshot.forEach(doc => {
             let item = new AwsIp();
             item.id = doc.id;
+            item.ipPrefix = doc.get('ip_prefix');
+            item.ipv6Prefix = doc.get('ipv6_prefix');
+            item.region = doc.get('region');
+            item.service = doc.get('service');
             this.ips.push(item);
         });
 

@@ -8,11 +8,11 @@ export class AwsIp {
     @Field(type => ID)
     id: string;
 
-    @Field(type => String)
-    ipPrefix: string;
+    @Field(type => String, {nullable: true})
+    ipPrefix?: string;
 
-    @Field(type => String)
-    ipv6_prefix: string;
+    @Field(type => String, {nullable: true})
+    ipv6Prefix?: string;
 
     @Field(type => String)
     networkBorderGroup: string;
