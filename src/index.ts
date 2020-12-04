@@ -1,23 +1,27 @@
 import "reflect-metadata"; // is required to make the type reflection work
-import { ApolloServer } from "apollo-server-express";
-import Express from "express";
-import { AwsIpResolver } from "./resolvers/awsip-resolve";
+import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { Container } from "typedi"; // IoC container
+import { AwsIpResolver } from "./resolvers/AwsIpResolver";
 
-const main = async () => {
+// the main entry point
+async function bootstrap() {
     const schema = await buildSchema({
+        // register the resolvers
         resolvers: [AwsIpResolver],
         // register the 3rd party IOC container
         container: Container,
     });
 
-    const apolloServer = new ApolloServer({schema});
+    // create apollo server
+    const server = new ApolloServer({
+        schema,
+        tracing: true,
+        cacheControl: true,
+    });
 
-    const app = Express();
-    apolloServer.applyMiddleware({app});
-
-    app.listen(4000, () => console.log('started'));
+    const { url } = await server.listen(4000);
+    console.log(`Server is running, GraphQL Playground available at ${url}`);
 }
 
-main();
+bootstrap();
