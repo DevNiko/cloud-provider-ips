@@ -23,7 +23,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-dev": "nodemon --exec ts-node src/index.ts"
+    "local": "nodemon --exec ts-node src/index.ts"
   },
   "repository": {
     "type": "git",

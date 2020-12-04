@@ -11,7 +11,7 @@ export class FirestoreService extends Firestore {
         super(
             {
                 "projectId": "cloud-provider-ip-ranges-api",
-                "keyFilename": "./cloud-provider-ip-ranges-api-gcp.json"
+                "keyFilename": "../../etc/cpipr-api-service-account.json"
             }
         );
     }

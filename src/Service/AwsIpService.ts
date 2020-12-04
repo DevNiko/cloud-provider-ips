@@ -1,4 +1,4 @@
-import { AwsIp } from "src/entity/AwsIp";
+import { AwsIp } from "../entity/AwsIp";
 import {
     FirestoreService
 } from "./FirestoreService";

@@ -1,4 +1,4 @@
-import { AwsIpService } from "src/Service/AwsIpService";
+import { AwsIpService } from "../Service/AwsIpService";
 import { Resolver, Query, Arg } from "type-graphql";
 import {AwsIp} from "../entity/AwsIp";
 import { Service } from "typedi";
