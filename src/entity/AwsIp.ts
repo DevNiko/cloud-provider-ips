@@ -1,8 +1,7 @@
-import "reflect-metadata";
 import { ObjectType, Field, ID } from "type-graphql";
 
 
-@ObjectType()
+@ObjectType({ simpleResolvers: true })
 export class AwsIp {
     
     @Field(type => ID)

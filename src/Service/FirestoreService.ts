@@ -1,4 +1,5 @@
 import {
+    CollectionGroup,
     CollectionReference,
     Firestore
 } from "@google-cloud/firestore";
@@ -16,8 +17,8 @@ export class FirestoreService extends Firestore {
         );
     }
 
-    getAwsIpsCollection(): CollectionReference {
-        return this.collection('aws-ips');
+    getAwsIpsCollection(): CollectionGroup {
+        return this.collectionGroup('aws-ips');
     }
 
     getAzureIpsCollection(): CollectionReference {

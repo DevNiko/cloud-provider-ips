@@ -1,8 +1,7 @@
 import { AwsIp } from "../entity/AwsIp";
-import {
-    FirestoreService
-} from "./FirestoreService";
+import { FirestoreService } from "./FirestoreService";
 import { Service } from "typedi";
+import { GetAwsIpArgs } from "../entity/GetAwpIpArgs";
 
 @Service()
 export class AwsIpService {
@@ -12,20 +11,22 @@ export class AwsIpService {
     constructor(private readonly fireStoreDb: FirestoreService) {
     }
 
-    async findByRegion(region: string): Promise<Array<AwsIp>> {
+    async find(args: GetAwsIpArgs): Promise<Array<AwsIp>> {
+        const {region, service } = args;
 
-        const snapshot = await this.fireStoreDb
+        const collection = await this.fireStoreDb
             .getAwsIpsCollection()
-            .where('region', '>=', region).get();
+            .where('region', '==', region)
+            .where('service', '==', service)
+            .orderBy('ip_prefix', 'asc').startAt(0).endAt(50).get();
 
-        if (snapshot.empty) {
-            console.log(`No matching documents for region: {region}.`);
+        if (collection.empty) {
+            console.log(`No matching documents for : {region} and {service}.`);
             return [];
         }
 
-        snapshot.forEach(doc => {
+        collection.forEach(doc => {
             let item = new AwsIp();
-            item.id = doc.id;
             item.ipPrefix = doc.get('ip_prefix');
             item.ipv6Prefix = doc.get('ipv6_prefix');
             item.region = doc.get('region');
