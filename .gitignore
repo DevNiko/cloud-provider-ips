@@ -103,3 +103,7 @@ dist
 # TernJS port file
 .tern-port
 /etc/cpipr-api-service-account.json
+
+# IDEs
+.idea
+.vscode
